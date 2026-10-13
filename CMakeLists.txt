@@ -15,16 +15,22 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 
+# link local fftw
+set(FFTW_ROOT "${CMAKE_SOURCE_DIR}/external/fftw3")
+add_library(FFTW3::FFTW3 STATIC IMPORTED GLOBAL)
+set_target_properties(FFTW3::FFTW3 PROPERTIES
+    IMPORTED_LOCATION "${FFTW_ROOT}/lib/libfftw3.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${FFTW_ROOT}/include"
+)
+
+
 # project modules
 add_subdirectory(src)
 
 target_link_libraries(waveletanalysis PRIVATE
-    fftw3
+    FFTW3::FFTW3
     m
 )
-
-
-
 
 
 
