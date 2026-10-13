@@ -40,13 +40,16 @@ static bool parse_timestamp(
 	double time_to_seconds,
 	double* time_seconds)
 {
-    const char* position = strstr(comment, "t=");
+    const char* position = strstr(comment, "time =");
 
     if (position == NULL) {
 	return false;
     }
 
-    position += 2;
+    position += 6;
+    while(isspace((unsigned char)*position) || *position == '\t') {
+	position++;
+    }
 
     char* end = NULL;
 
